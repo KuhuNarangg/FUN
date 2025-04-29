@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>How Much Do You Know Kuhu? 💖</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to bottom, #ffe0f0, #fce4ec);
+      font-family: 'Segoe UI', sans-serif;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    h1 {
+      font-size: 3em;
+      color: white;
+      text-align: center;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+      margin-top: 20px;
+      animation: bounceIn 1s ease-in-out;
+    }
+
+    .message {
+      font-size: 1.5rem;
+      color: #d63384;
+      animation: float 3s ease-in-out infinite;
+      margin-bottom: 20px;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0); }
+    }
+
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-color: #ff69b4;
+      transform: rotate(45deg);
+      animation: fall 5s linear infinite;
+      border-radius: 50% 50% 0 0;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-color: #ff69b4;
+      border-radius: 50%;
+    }
+
+    .heart::before {
+      top: -10px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: -10px;
+      top: 0;
+    }
+
+    @keyframes fall {
+      0% {
+        top: -10%;
+        opacity: 1;
+      }
+      100% {
+        top: 110%;
+        opacity: 0;
+      }
+    }
+
+    .cursor-text {
+      position: fixed;
+      color: #ff1493;
+      font-size: 1.2rem;
+      pointer-events: none;
+      font-weight: bold;
+    }
+
+    .submit-btn {
+      background-color: #FF69B4;
+      color: white;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 1.3em;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+      animation: bounce 2s infinite;
+      margin: 20px auto;
+      display: block;
+    }
+
+    .submit-btn:hover {
+      background-color: #FF1493;
+      box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .quiz-container {
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      width: 80%;
+      margin: auto;
+      opacity: 0;
+      animation: fadeIn 2s ease-out forwards;
+    }
+
+    .quiz-question {
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: fadeInUp 1s ease-out forwards;
+    }
+
+    .quiz-question label {
+      display: block;
+      margin: 10px 0;
+      font-size: 1.2em;
+      animation: fadeInLeft 1s ease-out forwards;
+    }
+
+    .quiz-question input[type="radio"] {
+      margin-right: 10px;
+    }
+
+    .result {
+      margin-top: 30px;
+      font-size: 1.5em;
+      color: #FF1493;
+      display: none;
+      text-align: center;
+    }
+
+    .feedback {
+      font-size: 1.2em;
+      margin-top: 10px;
+      display: none;
+      animation: fadeIn 1s ease-out forwards;
+    }
+
+    .feedback.correct {
+      color: green;
+      font-size: 1.5em;
+    }
+
+    .feedback.wrong {
+      color: red;
+      font-size: 1.5em;
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInLeft {
+      0% { opacity: 0; transform: translateX(-20px); }
+      100% { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+      }
+      40% {
+        transform: translateY(-10px);
+      }
+      60% {
+        transform: translateY(-5px);
+      }
+    }
+
+    /* Party Poppers */
+    @keyframes partyPopper {
+      0% {
+        opacity: 0;
+        transform: scale(0);
+      }
+      50% {
+        opacity: 1;
+        transform: scale(1.5);
+      }
+      100% {
+        opacity: 0;
+        transform: scale(0);
+      }
+    }
+
+    .party-popper {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      background-color: #ff69b4;
+      border-radius: 50%;
+      animation: partyPopper 1s ease-out forwards;
+    }
+
+    .sad-face {
+      font-size: 5rem;
+      color: red;
+      animation: shake 1s ease-in-out infinite;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      50% { transform: translateX(5px); }
+      75% { transform: translateX(-5px); }
+    }
+
+  </style>
+</head>
+<body>
+
+  <h1>How Much Do You Know Kuhu?</h1>
+  <div class="message">No matter the distance... I'm always here 💖</div>
+  <button onclick="startQuiz()" class="submit-btn">Start Quiz</button>
+
+  <div class="quiz-container" id="quizContainer" style="display:none;">
+    <div id="question1" class="quiz-question">
+      <p>What’s my favorite color?</p>
+      <label><input type="radio" name="q1" value="A"> A. Hot Pink</label>
+      <label><input type="radio" name="q1" value="B"> B. Baby Pink</label>
+      <label><input type="radio" name="q1" value="C"> C. Pastel Pink</label>
+      <div id="feedback1" class="feedback"></div>
+      <button onclick="checkAnswer(1, 'q1', 'C')">Next</button>
+    </div>
+    <div id="question2" class="quiz-question" style="display:none;">
+      <p>If I had to survive on one food forever, what would it be?</p>
+      <label><input type="radio" name="q2" value="A"> A. Pizza</label>
+      <label><input type="radio" name="q2" value="B"> B. Ice cream</label>
+      <label><input type="radio" name="q2" value="C"> C. Ramen</label>
+      <div id="feedback2" class="feedback"></div>
+      <button onclick="checkAnswer(2, 'q2', 'C')">Next</button>
+    </div>
+    <div id="question3" class="quiz-question" style="display:none;">
+      <p>What’s my type in guys?</p>
+      <label><input type="radio" name="q3" value="A"> A. Nerd and tall</label>
+      <label><input type="radio" name="q3" value="B"> B. Nerdy and curly hair</label>
+      <label><input type="radio" name="q3" value="C"> C. Bad boy with tattoos</label>
+      <div id="feedback3" class="feedback"></div>
+      <button onclick="checkAnswer(3, 'q3', 'A')">Next</button>
+    </div>
+    <div id="question4" class="quiz-question" style="display:none;">
+      <p>On average, how many times a week do I want to kill Tarshit?</p>
+      <label><input type="radio" name="q4" value="A"> A. Once or twice</label>
+      <label><input type="radio" name="q4" value="B"> B. Thrice or more</label>
+      <label><input type="radio" name="q4" value="C"> C. Always plotting</label>
+      <div id="feedback4" class="feedback"></div>
+      <button onclick="checkAnswer(4, 'q4', 'A')">Next</button>
+    </div>
+    <div id="question5" class="quiz-question" style="display:none;">
+      <p>Who is currently my most hated person?</p>
+      <label><input type="radio" name="q5" value="A"> A. Dev</label>
+      <label><input type="radio" name="q5" value="B"> B. Ishita</label>
+      <label><input type="radio" name="q5" value="C"> C. My college</label>
+      <div id="feedback5" class="feedback"></div>
+      <button onclick="checkAnswer(5, 'q5', 'A')">Next</button>
+    </div>
+  </div>
+
+  <div class="result" id="result"></div>
+
+  <script>
+    let score = 0;
+
+    // Falling hearts animation
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = 3 + Math.random() * 2 + "s";
+      document.body.appendChild(heart);
+
+      setTimeout(() => heart.remove(), 5000);
+    }
+
+    setInterval(createHeart, 300);
+
+    // Cursor animation
+    const cursorText = document.createElement('div');
+    cursorText.className = 'cursor-text';
+    cursorText.textContent = '💗';
+    document.body.appendChild(cursorText);
+
+    document.addEventListener('mousemove', e => {
+      cursorText.style.left = e.pageX + 15 + 'px';
+      cursorText.style.top = e.pageY - 5 + 'px';
+    });
+
+    function startQuiz() {
+      document.getElementById('quizContainer').style.display = 'block';
+      document.querySelector('button').style.display = 'none';
+      document.querySelector('.message').style.display = 'none';
+    }
+
+    function checkAnswer(question, questionName, correctAnswer) {
+      const selected = document.querySelector(`input[name="${questionName}"]:checked`);
+      const feedback = document.getElementById(`feedback${question}`);
+      if (selected) {
+        if (selected.value === correctAnswer) {
+          score++;
+          feedback.textContent = "Correct! 💖";
+          feedback.classList.add('correct');
+        } else {
+          feedback.textContent = "Wrong 😢";
+          feedback.classList.add('wrong');
+        }
+      }
+      document.getElementById(`question${question}`).style.display = 'none';
+      if (question < 5) {
+        document.getElementById(`question${question + 1}`).style.display = 'block';
+      } else {
+        displayResult();
+      }
+    }
+
+    function displayResult() {
+      const resultDiv = document.getElementById('result');
+      if (score >= 3) {
+        resultDiv.innerHTML = `<div class="party-popper"></div><div class="party-popper" style="animation-delay: 0.5s;"></div><div class="party-popper" style="animation-delay: 1s;"></div><p>Your score: ${score}/5</p><p>I knew it, I always believed in you! Heheheh 💖</p>`;
+      } else {
+        resultDiv.innerHTML = `<div class="sad-face">😢</div><p>Your score: ${score}/5</p><p>Huh, don’t even contact me! 😬</p>`;
+      }
+      resultDiv.style.display = 'block';
+      document.getElementById('quizContainer').style.display = 'none';
+    }
+  </script>
+
+</body>
+</html>
